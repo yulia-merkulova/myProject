@@ -1,0 +1,44 @@
+header .logo {
+    width: 25vw;
+    max-width: 250px;
+    fill: cadetblue;
+}
+
+.logo:hover {
+    fill: orange;
+    transform: scale(1.1);
+    transform-origin: center;
+    transition: fill 0.3s ease-out;  
+}
+
+header .panier {
+    margin-right: 5vw;
+    max-width: 40px;
+    width: 3vw;
+    float: right;
+}
+
+.panier-icone {
+
+    fill: cadetblue;
+    transition: fill 0.3s ease-out;
+}
+
+.panier-icone:hover {
+    fill: orange;
+    transform: scale(1.1);
+    transform-origin: center;
+    transition: fill 0.3s ease-out;  
+}
+
+.panier--disabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.5;
+}
+
+.panier--par {
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: center;
+}

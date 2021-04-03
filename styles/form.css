@@ -1,0 +1,28 @@
+form>div {
+    margin-top: 1vw;
+    margin-left: 1vw;
+}
+
+form>div>input[type="checkbox"] {
+    width: fit-content;
+}
+
+form>div>input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    width: 25vw;
+}
+
+/* Erreur */
+.error:not(input) {
+    color: red;
+}
+
+.error input {
+    border-color: red;
+}
+
+.error-message {
+    margin-left: 1vw;
+}

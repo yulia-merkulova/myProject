@@ -1,0 +1,44 @@
+.products {
+    display: grid;
+    margin: 3vw 0;
+}
+
+.products--4 {
+    column-gap: 2.5vw;
+    grid-template-columns: repeat(4, 1fr);
+    grid-row-gap: 2.5vw;
+}
+
+.product, .produit--disabled {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1vw;
+}
+
+.product {    
+    border: 3px solid cadetblue;
+    cursor: pointer;
+}
+
+.produit--disabled {
+    border: 2px solid grey;
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: default;
+}
+
+.product:hover {
+    border: 3px solid orange;
+    transform: scale(1.02);
+    transform-origin: center;
+    transition: fill 0.3s ease-out;
+}
+
+img {
+    width: 100%;
+    object-fit: cover;
+}

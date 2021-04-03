@@ -1,0 +1,3 @@
+TP2 Boutique réalisé par Yulia Merkulova
+
+URL https://e2095179.webdev.cmaisonneuve.qc.ca/JS_Client_Server/tp2/index.php
