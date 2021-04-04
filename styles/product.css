@@ -9,7 +9,7 @@
     grid-row-gap: 2.5vw;
 }
 
-.product, .produit--disabled {
+.product, .product--disabled {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -24,7 +24,7 @@
     cursor: pointer;
 }
 
-.produit--disabled {
+.product--disabled {
     border: 2px solid grey;
     opacity: 0.5;
     pointer-events: none;
