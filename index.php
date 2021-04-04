@@ -9,15 +9,15 @@
     define("RACINEWEB", "http://" . $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . "");
 
     // Définition de la fonction d'autoload
-    function mon_autoloader($classe) {
+    function mon_autoloader($class) {
         // Liste des répertoires à fouiller pour trouver les classes
-        $repertoires = array(RACINE . "controleurs/", 
-						RACINE . "modeles/", 
-						RACINE . "vues/");
+        $repertoires = array(RACINE . "controllers/", 
+						RACINE . "models/", 
+						RACINE . "views/");
         
         foreach ($repertoires as $rep) {
-            if(file_exists($rep . $classe . ".php")) {
-                require_once($rep . $classe . ".php");
+            if(file_exists($rep . $class . ".php")) {
+                require_once($rep . $class . ".php");
                 return;
             }                
         }
