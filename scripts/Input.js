@@ -1,8 +1,9 @@
+// The class Input is used to change the number of products in the cart and calculate the total sum
 class Input {
     constructor(el) {
         this._el = el;
         this._id = this._el.id;
-        this._elPrix = this._el.parentNode.previousElementSibling;
+        this._elPrice = this._el.parentNode.previousElementSibling;
         this._elTotalProduct = this._el.parentNode.nextElementSibling;
         this._elsTotalProduct = document.querySelectorAll('[data-js-totalProduct]');
         this._elTotal   = document.querySelector('[data-js-total]');
@@ -16,20 +17,22 @@ class Input {
         this._el.addEventListener('input', (e) => {
             e.preventDefault();
 
-            this.recalculer();
-            this.recalculerTotal();
+            this.recalculate();
+            this.recalculateTotal();
             this.setSessionStrage();
         });
 
     }
 
-    recalculer = () => {
+    // Сalculate the sum for one product
+    recalculate = () => {
         
-        this._elTotalProduct.innerHTML = parseInt(this._elPrix.innerHTML) * this._el.value;
+        this._elTotalProduct.innerHTML = parseInt(this._elPrice.innerHTML) * this._el.value;
          
     }
     
-    recalculerTotal = () => {
+    // Сalculate the total for all products in the table
+    recalculateTotal = () => {
         
         let sumTotal = 0;
         for (let i = 0, l = this._elsTotalProduct.length; i < l; i++) {
@@ -39,13 +42,14 @@ class Input {
          
     }
 
+    // Change the number of items in the cart
     setSessionStrage = () => {
-        let tableauObjets = JSON.parse(sessionStorage.getItem("panier"));
+        let objectsTable = JSON.parse(sessionStorage.getItem('cart'));
         
-        let objet = tableauObjets.find(x => x.id === this._id);
-        objet.quantity = this._el.value;
+        let object = objectsTable.find(x => x.id === this._id);
+        object.quantity = this._el.value;
 
-        sessionStorage.setItem('panier', JSON.stringify(tableauObjets));
+        sessionStorage.setItem('cart', JSON.stringify(objectsTable));
     }
 
 }
