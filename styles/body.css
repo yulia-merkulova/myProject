@@ -58,11 +58,11 @@ tbody input {
     width: 3vw;
 }
 
-.retour {
+.return {
     cursor: pointer;
 }
 
-.retour:hover{
+.return:hover{
     transform: scale(1.05);
     transform-origin: center;
     transition: transform 0.3s ease-out;  
