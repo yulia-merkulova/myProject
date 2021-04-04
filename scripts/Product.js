@@ -1,11 +1,12 @@
+// The class Product is used to add a product to the variable sessionStorage
 class Product {
     constructor(el) {
         this._el = el;
-        this._elNom = this._el.querySelector('[data-js-nom]');
-        this._elPrix = this._el.querySelector('[data-js-prix]');
-        this._elInventaire = this._el.querySelector('[data-js-inventaire]');
-        this._elPanier = document.querySelector('[data-js-panier]');
-        this._elNbPanier = document.querySelector('[data-js-nbPanier]');
+        this._elName = this._el.querySelector('[data-js-name]');
+        this._elPrice = this._el.querySelector('[data-js-price]');
+        this._elInventory = this._el.querySelector('[data-js-inventory]');
+        this._elCart = document.querySelector('[data-js-cart]');
+        this._elNbInCart = document.querySelector('[data-js-nbInCart]');
         
         this.init();
     }
@@ -15,48 +16,48 @@ class Product {
         this._el.addEventListener('click', (e) => {
             e.preventDefault();
             
-            this.ajouterProduitPanier();
+            this.addProductToCart();
         });
 
     }
 
-    ajouterProduitPanier = () => {
+    addProductToCart = () => {
 
-        let newObjet = {},
-        indice,
-        tableauObjets;
+        let newObject = {},
+            index,
+            objectsTable;
     
-        if (!sessionStorage.getItem('panier')) {
-            tableauObjets = [];
-            this._elPanier.classList.remove('panier--disabled');  
+        if (!sessionStorage.getItem('cart')) {
+            objectsTable = [];
+            this._elCart.classList.remove('cart--disabled');  
         }
         else {
-            if (Array.isArray(JSON.parse(sessionStorage.panier))) tableauObjets = JSON.parse(sessionStorage.getItem('panier'));
+            if (Array.isArray(JSON.parse(sessionStorage.cart))) objectsTable = JSON.parse(sessionStorage.getItem('cart'));
             else {
-                tableauObjets = [];
-                tableauObjets.push(JSON.parse(sessionStorage.getItem('panier')));
+                objectsTable = [];
+                objectsTable.push(JSON.parse(sessionStorage.getItem('cart')));
             }
         }
         
-        newObjet.id = this._el.dataset.jsId;
-        newObjet.nom = this._elNom.dataset.jsNom;
-        newObjet.prix = this._elPrix.dataset.jsPrix;
-        newObjet.inventaire = this._elInventaire.dataset.jsInventaire;
-        newObjet.quantity = 1;
+        newObject.id = this._el.dataset.jsId;
+        newObject.name = this._elName.dataset.jsName;
+        newObject.price = this._elPrice.dataset.jsPrice;
+        newObject.inventory = this._elInventory.dataset.jsInventory;
+        newObject.quantity = 1;
         
-        for (let i = 0, l = tableauObjets.length; i < l; i++) {
-            if (tableauObjets[i].id === newObjet.id) 
-                indice = i;
+        for (let i = 0, l = objectsTable.length; i < l; i++) {
+            if (objectsTable[i].id === newObject.id) 
+                index = i;
         }
         
-        //Si le produit est déjà ajouté au panier, on incremente quantity +1
-        if (typeof indice != "undefined") tableauObjets[indice].quantity++
-        else tableauObjets.push(newObjet);
+        // If the product is already added to the cart, quantity is increased +1
+        if (typeof index != "undefined") objectsTable[index].quantity++
+        else objectsTable.push(newObject);
 
-        sessionStorage.setItem('panier', JSON.stringify(tableauObjets));
+        sessionStorage.setItem('cart', JSON.stringify(objectsTable));
         
-        //Reafficher le nombre des produits au panier
-        this._elNbPanier.innerHTML = tableauObjets.length;
+        // Display the number of products in the cart
+        this._elNbInCart.innerHTML = objectsTable.length;
     }
         
 }
