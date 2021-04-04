@@ -1,112 +1,113 @@
+// The class FormValidator is used to validate form fields
 class FormValidator {
     constructor(el) {
-        //Récupérer les champs à valider
+        // Select the fields to validate
         this._elInputsRequired = el.querySelectorAll('[required]');
         this._elCodePostal = el.querySelector('[data-js-input="CodePostal"]');
-        this._elCourriel = el.querySelector('[data-js-input="Courriel"]');
-        this._elCarteCredit = el.querySelector('[data-js-input="CarteCredit"]');
-        this._elCodeCvv = el.querySelector('[data-js-input="CodeSecurite"]');
-        // Expression rationnelle pour la vérification de code Postal
+        this._elEmail= el.querySelector('[data-js-input="Email"]');
+        this._elCreditCard = el.querySelector('[data-js-input="CreditCard"]');
+        this._elCodeCvv = el.querySelector('[data-js-input="CodeCvv"]');
+        // Regular Expression for Postal Code Verification
         this._regex_codePostal = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/;
-        // Expression rationnelle pour la vérification de courriel
-        this._regex_courriel = /(.+)@(.+){1,}\.(.+){1,}/;
-        // Expression rationnelle pour la vérification de carte crédit
-        this._regex_carteCredit = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$/;
-        // Expression rationnelle pour la vérification de code de sécurité
+        // Regular Expression for Email Verification
+        this._regex_email = /(.+)@(.+){1,}\.(.+){1,}/;
+        // Regular expression for credit card verification
+        this._regex_creditCard = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14})$/;
+        // Regular expression for security code verification
         this._regex_codeCvv = /^[0-9]{3}$/;
 
-        //Initialiser _estValide à true
-        this._estValide = true;
+        // Initialize _isValid to true
+        this._isValid = true;
         
-        this.validerForm();
+        this.validateForm();
         
     }
     
-    //Validation et la gestion d'affichage
-    validerForm = () => {
+    // Fields validation
+    validateForm = () => {
         
-        //Validation des champs obligatoires
+        // Required Fields validation
         for (let i = 0, l = this._elInputsRequired.length; i < l; i++) {
             
             let elInput = this._elInputsRequired[i];
-            let estValideChamp =  elInput.value.trim().length > 0;
+            let isValidField =  elInput.value.trim().length > 0;
             
-            // Si le champ n'est pas correct, on appelle setter et on définit la valeur false
-            if (!estValideChamp) this.estValide = false;
-            // Si le champ Nom est vide, on affiche le message et on ajoute le classe CSS  
-            if (!estValideChamp) {
+            // If the field is not correct, call setter and set the value to false
+            if (!isValidField) this.isValid = false;
+            // If the field is empty, display the message and add the CSS class  
+            if (!isValidField) {
                 elInput.parentElement.classList.add("error");
                 elInput.nextElementSibling.textContent = `Le champ ${elInput.dataset.jsInput} est obligatoire.`;   
-            } else { // On enleve le message et le classe
+            } else { // Remove message and class
                 elInput.nextElementSibling.textContent = "";
                 elInput.parentElement.classList.remove("error");
             };
         }
         
-        //Validation de champ Code Postal
-        let estValideCodePostal = this._regex_codePostal.test(this._elCodePostal.value);
+        // Postal Code field validation
+        let isValidCodePostal = this._regex_codePostal.test(this._elCodePostal.value);
         
-        // Si le champ Courriel n'est pas correct, on appelle setter et on définit la valeur false
-        if (!estValideCodePostal) this.estValide = false;
-        // Si le champ Courriel n'est pas correct, on affiche le message et on ajoute le classe CSS
+        // If the Postal Code field is not correct, call setter and set the value to false
+        if (!isValidCodePostal) this.isValid = false;
+        // If the Postal Code field is not correct, display the message and add the CSS class
         if (this._elCodePostal.value.trim().length > 0) 
-            if (!estValideCodePostal) {
+            if (!isValidCodePostal) {
                 this._elCodePostal.nextElementSibling.textContent = "Le code postal saisi n'est pas valide.";
                 this._elCodePostal.parentElement.classList.add("error");  
-            } else { // On enleve le message et le classe
+            } else { // Remove message and class
                 this._elCodePostal.nextElementSibling.textContent = "";
                 this._elCodePostal.parentElement.classList.remove("error");
             };
         
-        //Validation de champ Courriel
-        let estValideCourriel = this._regex_courriel.test(this._elCourriel.value);
+        // Email field validation
+        let isValidEmail = this._regex_email.test(this._elEmail.value);
         
-        // Si le champ Courriel n'est pas correct, on appelle setter et on définit la valeur false
-        if (!estValideCourriel) this.estValide = false;
-        // Si le champ Courriel n'est pas correct, on affiche le message et on ajoute le classe CSS
-        if (this._elCourriel.value.trim().length > 0) 
-            if (!estValideCourriel) {
-                this._elCourriel.nextElementSibling.textContent = "L'adresse courriel saisie n'est pas valide.";
-                this._elCourriel.parentElement.classList.add("error");  
-            } else { // On enleve le message et le classe
-                this._elCourriel.nextElementSibling.textContent = "";
-                this._elCourriel.parentElement.classList.remove("error");
+        // If the Email field is not correct, call setter and set the value to false
+        if (!isValidEmail) this.isValid = false;
+        // If the Email field is not correct, display the message and add the CSS class
+        if (this._elEmail.value.trim().length > 0) 
+            if (!isValidEmail) {
+                this._elEmail.nextElementSibling.textContent = "L'adresse courriel saisie n'est pas valide.";
+                this._elEmail.parentElement.classList.add("error");  
+            } else { // Remove message and class
+                this._elEmail.nextElementSibling.textContent = "";
+                this._elEmail.parentElement.classList.remove("error");
             };
         
-        //Validation de champ Carte Crédit
-        let estValideCarteCredit = this._regex_carteCredit.test(this._elCarteCredit.value);
+        // Credit Card field validation
+        let isValidCreditCard = this._regex_creditCard.test(this._elCreditCard.value);
         
-        // Si le champ Carte Crédit n'est pas correct, on appelle setter et on définit la valeur false
-        if (!estValideCarteCredit) this.estValide = false;
-        // Si le champ Carte Crédit n'est pas correct, on affiche le message et on ajoute le classe CSS
-        if (this._elCarteCredit.value.trim().length > 0) 
-            if (!estValideCarteCredit) {
-                this._elCarteCredit.nextElementSibling.textContent = "La carte crédit saisie n'est pas valide.";
-                this._elCarteCredit.parentElement.classList.add("error");  
-            } else { // On enleve le message et le classe
-                this._elCarteCredit.nextElementSibling.textContent = "";
-                this._elCarteCredit.parentElement.classList.remove("error");
+        // If the Credit Card field is not correct, call setter and set the value to false
+        if (!isValidCreditCard) this.isValid = false;
+        // If the Credit Card field is not correct, display the message and add the CSS class
+        if (this._elCreditCard.value.trim().length > 0) 
+            if (!isValidCreditCard) {
+                this._elCreditCard.nextElementSibling.textContent = "La carte crédit saisie n'est pas valide.";
+                this._elCreditCard.parentElement.classList.add("error");  
+            } else { // Remove message and class
+                this._elCreditCard.nextElementSibling.textContent = "";
+                this._elCreditCard.parentElement.classList.remove("error");
             };
    
-        //Validation de champ Code de sécurité
-        let estValideCodeSecurite = this._regex_codeCvv.test(this._elCodeCvv.value);
-        console.log(estValideCodeSecurite)
-        // Si le champ Carte Crédit n'est pas correct, on appelle setter et on définit la valeur false
-        if (!estValideCodeSecurite) this.estValide = false;
-        // Si le champ Carte Crédit n'est pas correct, on affiche le message et on ajoute le classe CSS
+        // Security code field validation
+        let isValidCodeCvv = this._regex_codeCvv.test(this._elCodeCvv.value);
+        
+        // If the Security code field is not correct, call setter and set the value to false
+        if (!isValidCodeCvv) this.isValid = false;
+        // If the Security code field is not correct, display the message and add the CSS class
         if (this._elCodeCvv.value.trim().length > 0) 
-            if (!estValideCodeSecurite) {
+            if (!isValidCodeCvv) {
                 this._elCodeCvv.nextElementSibling.textContent = "Le code cvv saisi n'est pas valide.";
                 this._elCodeCvv.parentElement.classList.add("error");  
-            } else { // On enleve le message et le classe
+            } else { // Remove message and class
                 this._elCodeCvv.nextElementSibling.textContent = "";
                 this._elCodeCvv.parentElement.classList.remove("error");
             };
     }
 
-    //Setter estValide
-    set estValide(nouvelleValeur) {
-        this._estValide = nouvelleValeur;
+    //Setter isValid
+    set isValid(newValue) {
+        this._isValid = newValue;
     }
 
 }
