@@ -1,60 +1,64 @@
+// Еhe class Form is used to make requests :
+// 1. Add user if it doesn't exist
+// 2. Add order 
+// 3. Subtract the number of products from the database
 class Form {
     constructor(el) {
-        //Récupérer le formulaire et champs nécessaires
+        // Select form and required fields
         this._elForm = el;
         this._elNom = this._elForm.querySelector('[data-js-input="Nom"]');
         this._elPrenom = this._elForm.querySelector('[data-js-input="Prenom"]');
         this._elAdresse = this._elForm.querySelector('[data-js-input="Adresse"]');
         this._elCodePostal = this._elForm.querySelector('[data-js-input="CodePostal"]');
-        this._elCourriel = this._elForm.querySelector('[data-js-input="Courriel"]');
+        this._elEmail = this._elForm.querySelector('[data-js-input="Email"]');
         this._elInfolettre = this._elForm.querySelector('[data-js-input="Infolettre"]');
-        this._elCarteCredit = this._elForm.querySelector('[data-js-input="CarteCredit"]');
+        this._elCreditCard = this._elForm.querySelector('[data-js-input="CreditCard"]');
         this._elExpiration = this._elForm.querySelector('[data-js-input="Expiration"]');
-        this._elCodeCvv = this._elForm.querySelector('[data-js-input="CodeSecurite"]');     
+        this._elCodeCvv = this._elForm.querySelector('[data-js-input="CodeCvv"]');     
         this._elSubmit = this._elForm.querySelector('[data-js-submit]');
         this._elTotal   = document.querySelector('[data-js-total]');
         this._elSectionForm = document.querySelector('[data-js-formulaire]');
         this._elSectionMessage = document.querySelector('[data-js-thank]');
-        this.tableauObjets = JSON.parse(sessionStorage.getItem("panier"));       
+        this.objectsTable = JSON.parse(sessionStorage.getItem("cart"));       
         
         this.init();
     }
     
     init = () => {
-        //Gestion du click du bouton data-js-submit
+        // Attach a click event to a button element data-js-submit.
         this._elSubmit.addEventListener('click', this.gererSubmit);
     }
    
     gererSubmit = (e) => {
         e.preventDefault();
         
-        //Appel de la classe FormValidation
+        // Instantiate the FormValidation class
         let newFormValidator = new FormValidator(this._elForm);
         
-        //Si le formulaire est valide, on enregistre les données dans la base de données et on affiche le message Merci! 
-        if (newFormValidator._estValide == true) {
-            // Enregistrer les données dans  
-            this.checkUsager();
-            this.addCommande();
+        // If the form is valid, save the data to the database and display the message Merci! 
+        if (newFormValidator._isValid == true) {
+            // Save data to database
+            this.checkUser();
+            this.addOrder();
             this.subtractProduct();
 
-            // Vider le contenu de formulaire
+            // Empty form content
 			this._elSectionForm.remove();
-            //Afficher le message
+            // Display message
             this._elSectionMessage.classList.remove("hidden");
-            //Vider la variable SessionStorage
-            sessionStorage.removeItem('panier');
-            //Redériger à la page des produits dans 5sec
+            // Empty the SessionStorage variable
+            sessionStorage.removeItem('cart');
+            // Redirect to page -> list of products in 5 sec
             window.setTimeout(function () {
                 location.href = "index.php";
             },5000);
         }
         
     }
-    // Créer / Modifier l'usager
-    checkUsager = () => {
+    // Create / Modify the user
+    checkUser = () => {
 
-        // Déclaration de l'objet XMLHttpRequest
+        // Declare the object XMLHttpRequest
 		let xhr;
 		xhr = new XMLHttpRequest();
         
@@ -62,22 +66,21 @@ class Form {
             prenom = this._elPrenom.value,
             adresse = this._elAdresse.value,
             codePostal =this._elCodePostal.value,
-            courriel = this._elCourriel.value,
+            email = this._elEmail.value,
             infolettre = (this._elInfolettre.checked) ? 1 : 0;
         
         nom = encodeURIComponent(nom);
         prenom = encodeURIComponent(prenom);
         adresse = encodeURIComponent(adresse);
-        courriel = encodeURIComponent(courriel);
+        email = encodeURIComponent(email);
 		
-		// Initialisation de la requète
+		// Initialization of the request
 		if (xhr) {
 
-			// Ouverture de la requète 
-            xhr.open('POST', 'index.php?Produits_AJAX&action=verifierUsager');
+			// Opening of the request
+            xhr.open('POST', 'index.php?Products_AJAX&action=checkUser');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-			// Écoute l'objet XMLHttpRequest instancié et défini le comportement en callback
 			xhr.addEventListener('readystatechange', () => {
 				if (xhr.readyState === 4) {
 					if (xhr.status === 200) {
@@ -88,35 +91,31 @@ class Form {
 				}
 			});
 
-			// Envoi de la requète
-			xhr.send('&nom=' + nom + '&prenom=' + prenom + '&adresse=' + adresse + '&codepostal=' + codePostal + '&courriel=' + courriel + '&optin=' + infolettre);
+			// Send the request
+			xhr.send('&nom=' + nom + '&prenom=' + prenom + '&adresse=' + adresse + '&codepostal=' + codePostal + '&courriel=' + email + '&optin=' + infolettre);
         }
     }
 
-    // Ajouter la commande
-    addCommande = () => {
+    // Add order
+    addOrder = () => {
 
-        // Déclaration de l'objet XMLHttpRequest
 		let xhr;
 		xhr = new XMLHttpRequest();
 		
-		// Initialisation de la requète
 		if (xhr) {
   
             let total = 0,
                 detail = "";
-            for (let i = 0, l = this.tableauObjets.length; i < l; i++) {
-                let produit = this.tableauObjets[i];
-                detail += produit.quantity + " " + produit.nom;
+            for (let i = 0, l = this.objectsTable.length; i < l; i++) {
+                let product = this.objectsTable[i];
+                detail += product.quantity + " " + product.name;
                 if (i != l-1) detail += ", ";
-                total += produit.prix * produit.quantity;
+                total += product.price * product.quantity;
             }
 
-			// Ouverture de la requète 
-            xhr.open('POST', 'index.php?Produits_AJAX&action=ajouterCommande');
+            xhr.open('POST', 'index.php?Products_AJAX&action=addOrder');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-			// Écoute l'objet XMLHttpRequest instancié et défini le comportement en callback
 			xhr.addEventListener('readystatechange', () => {
 				if (xhr.readyState === 4) {
 					if (xhr.status === 200) {
@@ -127,30 +126,26 @@ class Form {
 				}
 			});
 
-			// Envoi de la requète
+            // Send the request
 			xhr.send('&panier=' + detail + '&total=' + total);
         }
     }
 
-    // Soustraire les produits
+    // Subtract the number of ordered items from the database table 
     subtractProduct = () => {
 
-        for (let i = 0, l = this.tableauObjets.length; i < l; i++) {
+        for (let i = 0, l = this.objectsTable.length; i < l; i++) {
            
-            let produit = this.tableauObjets[i];
+            let product = this.objectsTable[i];
 
-            // Déclaration de l'objet XMLHttpRequest
             let xhr;
             xhr = new XMLHttpRequest();
             
-            // Initialisation de la requète
             if (xhr) {
 
-                // Ouverture de la requète 
-                xhr.open('POST', 'index.php?Produits_AJAX&action=soustraireProduit');
+                xhr.open('POST', 'index.php?Products_AJAX&action=subtractProduct');
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-                // Écoute l'objet XMLHttpRequest instancié et défini le comportement en callback
                 xhr.addEventListener('readystatechange', () => {
                     if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
@@ -161,8 +156,8 @@ class Form {
                     }
                 });
 
-                // Envoi de la requète
-                xhr.send('&id=' + produit.id + '&quantity=' + (parseInt(produit.inventaire) - parseInt(produit.quantity)));
+                // Send the request
+                xhr.send('&id=' + product.id + '&quantity=' + (parseInt(product.inventory) - parseInt(product.quantity)));
             }
         }
     }
