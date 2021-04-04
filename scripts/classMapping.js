@@ -4,8 +4,7 @@ const classMapping = {
     'Product'         : Product,
     'Filter'          : Filter,
     'ProductList'     : ProductList,
-    'Panier'          : Panier,
+    'Cart'            : Cart,
     'Input'           : Input,
-    'Commande'        : Commande,
-    'ProductListMore' : ProductListMore
+    'Order'           : Order
 };
