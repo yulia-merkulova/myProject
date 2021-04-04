@@ -11,33 +11,33 @@ header .logo {
     transition: fill 0.3s ease-out;  
 }
 
-header .panier {
+header .cart {
     margin-right: 5vw;
     max-width: 40px;
     width: 3vw;
     float: right;
 }
 
-.panier-icone {
+.cart-icon {
 
     fill: cadetblue;
     transition: fill 0.3s ease-out;
 }
 
-.panier-icone:hover {
+.cart-icon:hover {
     fill: orange;
     transform: scale(1.1);
     transform-origin: center;
     transition: fill 0.3s ease-out;  
 }
 
-.panier--disabled {
+.cart--disabled {
     pointer-events: none;
     cursor: default;
     opacity: 0.5;
 }
 
-.panier--par {
+.cart--par {
     margin-bottom: 5px;
     font-weight: bold;
     text-align: center;
