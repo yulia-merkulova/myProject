@@ -1,3 +1,4 @@
+// The class Filter is used to control the visibility of the button in the filter section
 class Filter {
     constructor(el) {
       
