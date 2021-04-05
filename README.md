@@ -6,6 +6,7 @@ This project helped me to understand many details and to progress in JS.
 Also, this work contains database queries (AJAX queries).
 
 Project description
+
 This is a site for a small tableware store.
 The following functionalities have been implemented:
 1. Display of 12 products on the first page
@@ -20,6 +21,7 @@ The following functionalities have been implemented:
 10. Automatic transition to the first page
 
 Installation instructions
+
 1. Create a database using file boutique.sql
 2. Сonnect the database to the project in a file TemplateDAO.php
    $this->connexion = new PDO("mysql:host=localhost;dbname=boutique", "root", "root"); // for MacOS
