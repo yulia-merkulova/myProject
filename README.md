@@ -5,7 +5,8 @@ I chose this project because it well demonstrates my acquired knowledge in objec
 This project helped me to understand many details and to progress in JS.
 Also, this work contains database queries (AJAX queries).
 
-So, this is a site for a small tableware store.
+Project description
+This is a site for a small tableware store.
 The following functionalities have been implemented:
 1. Display of 12 products on the first page
 2. The ability to display more products at the click of a button
