@@ -1,13 +1,12 @@
 # myProject
  my project for Le Mac Urbain
  
-I chose this project because it is half written in Java Script and 
-it well demonstrates my acquired knowledge in object-oriented programming. 
+I chose this project because it well demonstrates my acquired knowledge in object-oriented programming. 
 This project helped me to understand many details and to progress in JS.
-Besides this work contains database queries (AJAX queries).
+Also, this work contains database queries (AJAX queries).
 
 So, this is a site for a small tableware store.
-The following functionality has been implemented:
+The following functionalities have been implemented:
 1. Display of 12 products on the first page
 2. The ability to display more products at the click of a button
 3. Sort products alphabetically or by price
