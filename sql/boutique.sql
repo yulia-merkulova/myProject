@@ -1,6 +1,7 @@
 
 -- Database: boutique
-
+CREATE SCHEMA IF NOT EXISTS `boutique` DEFAULT CHARACTER SET utf8 ;
+USE `boutique` ;
 
 CREATE TABLE produits (
 	id int NOT NULL AUTO_INCREMENT,
