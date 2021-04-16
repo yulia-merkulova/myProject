@@ -1,5 +1,5 @@
 # myProject
- my project for Le Mac Urbain
+ my project
  
 I chose this project because it well demonstrates my acquired knowledge in object-oriented programming. 
 This project helped me to understand many details and to progress in JS.
